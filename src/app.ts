@@ -6,7 +6,6 @@ import cors from "@koa/cors";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-
 import User from "./models/user.js";
 
 import authRoutes from "./routes/auth.js";
@@ -23,9 +22,7 @@ import authRoutes from "./routes/auth.js";
 
         app.use(authRoutes.routes());
 
-        await mongoose.connect(
-            "mongodb+srv://ericnova0426:970426@cluster0.983qn4m.mongodb.net/DayOff?retryWrites=true"
-        );
+        await mongoose.connect("secret");
 
         const user = await User.findOne();
         if (!user) {
