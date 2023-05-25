@@ -11,6 +11,17 @@ import User from "./models/user.js";
 import authRoutes from "./routes/auth.js";
 import dayoffRoutes from "./routes/dayoff.js";
 
+const createFirstAdmin = async function () { //DB에 관리자 계정이 없을 경우 관리자 계정 생성
+    const hashedPw = await bcrypt.hash("0000", 12);
+    const newUser = new User({
+        name: "Admin",
+        email: "novaeric@naver.com",
+        password: hashedPw,
+        role: "admin",
+    });
+    await newUser.save();
+};
+
 // 시작
 (async () => {
     try {
@@ -28,14 +39,7 @@ import dayoffRoutes from "./routes/dayoff.js";
 
         const user = await User.findOne();
         if (!user) {
-            const hashedPw = await bcrypt.hash("0000", 12);
-            const newUser = new User({
-                name: "Admin",
-                email: "novaeric@naver.com",
-                password: hashedPw,
-                role: "admin",
-            });
-            await newUser.save();
+            createFirstAdmin();
         }
 
         app.listen(env.APP_PORT, () => {
@@ -45,3 +49,5 @@ import dayoffRoutes from "./routes/dayoff.js";
         console.log(err);
     }
 })();
+
+

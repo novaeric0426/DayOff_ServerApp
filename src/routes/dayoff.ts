@@ -5,6 +5,6 @@ const router = new Router({
     prefix: '/dayoff'
 });
 
-router.post('/submit',dayoffController.dayOffSubmitPost);
+router.post('/submit',dayoffController.dayOffSubmitPost); //휴가 신청 제출
 
 export default router;
