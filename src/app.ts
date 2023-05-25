@@ -22,7 +22,7 @@ import authRoutes from "./routes/auth.js";
 
         app.use(authRoutes.routes());
 
-        await mongoose.connect("secret");
+        await mongoose.connect(env.MONGODB_ACCESS_URL);
 
         const user = await User.findOne();
         if (!user) {

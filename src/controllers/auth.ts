@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 
 const signup = async (ctx: any, next: any) => {
     try {
-        const email = ctx.request.body.email;
-        const password = ctx.request.body.password;
-        const name = ctx.request.body.name;
-        const role = ctx.request.body.role;
+        const email:string = ctx.request.body.email;
+        const password:string = ctx.request.body.password;
+        const name:string = ctx.request.body.name;
+        const role:string = ctx.request.body.role;
 
         const hashedPw = await bcrypt.hash(password, 12);
 
@@ -34,8 +34,8 @@ const signup = async (ctx: any, next: any) => {
 };
 
 const login = async (ctx: any, next: any) => {
-    const email = ctx.request.body.email;
-    const password = ctx.request.body.password;
+    const email:string = ctx.request.body.email;
+    const password:string = ctx.request.body.password;
     let loadedUser;
 
     try {
