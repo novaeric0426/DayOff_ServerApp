@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 import User from "./models/user.js";
 
 import authRoutes from "./routes/auth.js";
+import dayoffRoutes from "./routes/dayoff.js";
 
 // 시작
 (async () => {
@@ -21,6 +22,7 @@ import authRoutes from "./routes/auth.js";
         app.use(koaBody());
 
         app.use(authRoutes.routes());
+        app.use(dayoffRoutes.routes());
 
         await mongoose.connect(env.MONGODB_ACCESS_URL);
 

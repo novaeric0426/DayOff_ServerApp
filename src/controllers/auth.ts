@@ -66,6 +66,7 @@ const login = async (ctx: any, next: any) => {
             ctx.body = {
                 token: token,
                 userId: loadedUser._id.toString(),
+                role:loadedUser.role
             };
             console.log("token!");
         }
