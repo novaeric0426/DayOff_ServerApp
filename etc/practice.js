@@ -1,3 +1,5 @@
+//Schema 작성 연습용 파일
+
 import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({

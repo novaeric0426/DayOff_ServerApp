@@ -1,5 +1,7 @@
+//몽고DB 테스트용 파일
+
 import mongoose from "mongoose";
-import User from "../server-app/user.js";
+import User from "./practice.js";
 
 mongoose.connect(
     "mongodb+srv://ericnova0426:970426@cluster0.983qn4m.mongodb.net/test?retryWrites=true"
