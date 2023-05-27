@@ -7,7 +7,7 @@ const dayOffSubmitPost = async (ctx: any, next: any) => {
         const token = ctx.request.headers.authorization.split(" ")[1];
         const decodedToken: any = jwt.verify(token, env.JWT_SECRET_KEY);
         const userId = decodedToken.userId;
-        const requestDate = ctx.request.body.date;
+        const requestDate: String = TimeChange_KOR(ctx.request.body.date);
         const reason = ctx.request.body.reason;
         const dayOffType = ctx.request.body.dayOffValue;
         console.log(token, userId, requestDate, reason, dayOffType);
@@ -33,5 +33,14 @@ const dayOffSubmitPost = async (ctx: any, next: any) => {
         next(err);
     }
 };
+
+function TimeChange_KOR(date: string) {
+    const utcDate = new Date(date);
+    // Convert to Korean time
+    const koreanDateString = utcDate.toLocaleString("ko-KR", {
+        timeZone: "Asia/Seoul",
+    });
+    return koreanDateString;
+}
 
 export { dayOffSubmitPost };

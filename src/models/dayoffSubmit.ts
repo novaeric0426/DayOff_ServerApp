@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const dayOffSubmitFormSchema = new Schema({
     date:{
-        type: Date,
+        type: String,
         required: true
     },
     userId:{

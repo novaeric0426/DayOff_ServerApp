@@ -10,6 +10,7 @@ import User from "./models/user.js";
 
 import authRoutes from "./routes/auth.js";
 import dayoffRoutes from "./routes/dayoff.js";
+import adminRoutes from "./routes/admin.js";
 
 const createFirstAdmin = async function () { //DB에 관리자 계정이 없을 경우 관리자 계정 생성
     const hashedPw = await bcrypt.hash("0000", 12);
@@ -34,6 +35,7 @@ const createFirstAdmin = async function () { //DB에 관리자 계정이 없을 
 
         app.use(authRoutes.routes());
         app.use(dayoffRoutes.routes());
+        app.use(adminRoutes.routes());
 
         await mongoose.connect(env.MONGODB_ACCESS_URL);
 
