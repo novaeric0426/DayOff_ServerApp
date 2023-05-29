@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import * as env from "../utils/env.js";
 
 const signup = async (ctx: any, next: any) => {
     try {
@@ -59,7 +60,7 @@ const login = async (ctx: any, next: any) => {
                     email: loadedUser.email,
                     userId: loadedUser._id.toString(),
                 },
-                "someSecretKey",
+                env.JWT_SECRET_KEY,
                 { expiresIn: "1h" }
             );
             ctx.status = 200;
