@@ -7,7 +7,7 @@ const router = new Router({
     prefix: '/admin'
 });
 
-router.get('/users',verifyToken,adminController.getUsers); //fetch all guests
+router.get('/users',adminController.getUsers); //fetch all guests
 router.patch('/changepw',verifyToken,adminController.changePassword); //change password
 
 export default router;
