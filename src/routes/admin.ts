@@ -8,7 +8,8 @@ const router = new Router({
 });
 
 router.get('/users',adminController.getUsers); //fetch all guests
-router.patch('/changepw',verifyToken,adminController.changePassword); //change password
+router.patch('/changew',verifyToken,adminController.changePassword); //change password
+router.delete('/deleteuser',adminController.deleteUser); //delete user
 
 export default router;
 

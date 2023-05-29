@@ -49,4 +49,22 @@ const changePassword = async (ctx: any, next: any) => {
     }
 };
 
-export { getUsers, changePassword };
+const deleteUser = async (ctx: any, next: any) => {
+    try{
+        const userId:string = ctx.request.body.userId;
+        console.log(userId, typeof userId);
+        await User.findByIdAndDelete(userId);
+        console.log("User deleted!");
+        ctx.status = 200;
+        ctx.body = {
+            message: "User deleted!"
+        };
+    } catch(err:any){
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+export { getUsers, changePassword,deleteUser };
