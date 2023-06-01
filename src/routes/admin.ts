@@ -4,7 +4,7 @@ import { verifyToken } from '../controllers/middleware.js';
 
 
 const router = new Router({
-    prefix: '/admin'
+    prefix: '/admin',
 });
 
 router.get('/users',adminController.getUsers); //fetch all guests

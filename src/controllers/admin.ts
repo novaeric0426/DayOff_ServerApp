@@ -1,16 +1,17 @@
-import User from "../models/user.js";
-import bcrypt from "bcryptjs";
+import { Context,Next } from 'koa';
+import User from '../models/user.js';
+import { makeHashPwd } from './middleware.js';
 
-const getUsers = async (ctx: any, next: any) => {
+const getUsers = async (ctx: Context, next: any) => {
     try {
-        const users = await User.find({ role: "user" });
-        console.log("User Fetched Success!");
+        const users = await User.find({ role: 'user' });
+        console.log('User Fetched Success!');
         ctx.status = 200;
         ctx.body = {
-            message: "Users fetched",
+            message: 'Users fetched',
             users: users,
         };
-        console.log("Users fetched");
+        console.log('Users fetched');
     } catch (err: any) {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -21,24 +22,24 @@ const getUsers = async (ctx: any, next: any) => {
 
 const changePassword = async (ctx: any, next: any) => {
     try {
-        const userId:string= ctx.request.body.userId;
-        const newPassword:string = ctx.request.body.newPassword;
+        const userId: string = ctx.request.body.userId;
+        const newPassword: string = ctx.request.body.newPassword;
         const user = await User.findById(userId);
         console.log(user);
         if (!user) {
-            console.log("Hi!");
+            console.log('Hi!');
             ctx.status = 404;
             ctx.body = {
-                message: "User not found",
+                message: 'User not found',
             };
             return;
         }
-        const hashedPw = await bcrypt.hash(newPassword, 12);
-        user.password = hashedPw;
+        const hashedPw = await makeHashPwd(newPassword);
+        user.password = <string>hashedPw;
         await user.save();
         ctx.status = 200;
         ctx.body = {
-            message: "Password changed!",
+            message: 'Password changed!',
         };
     } catch (err: any) {
         if (!err.statusCode) {
@@ -50,21 +51,21 @@ const changePassword = async (ctx: any, next: any) => {
 };
 
 const deleteUser = async (ctx: any, next: any) => {
-    try{
-        const userId:string = ctx.request.body.userId;
+    try {
+        const userId: string = ctx.request.body.userId;
         console.log(userId, typeof userId);
         await User.findByIdAndDelete(userId);
-        console.log("User deleted!");
+        console.log('User deleted!');
         ctx.status = 200;
         ctx.body = {
-            message: "User deleted!"
+            message: 'User deleted!',
         };
-    } catch(err:any){
-        if(!err.statusCode){
+    } catch (err: any) {
+        if (!err.statusCode) {
             err.statusCode = 500;
         }
         next(err);
     }
 };
 
-export { getUsers, changePassword,deleteUser };
+export { getUsers, changePassword, deleteUser };

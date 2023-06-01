@@ -1,24 +1,25 @@
-import Koa from "koa";
-import * as env from "./utils/env.js";
-import Router from "koa-router";
-import koaBody from "koa-bodyparser";
-import cors from "@koa/cors";
-import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import Koa from 'koa';
+import * as env from './utils/env.js';
+import Router from 'koa-router';
+import koaBody from 'koa-bodyparser';
+import cors from '@koa/cors';
+import mongoose from 'mongoose';
 
-import User from "./models/user.js";
+import User from './models/user.js';
 
-import authRoutes from "./routes/auth.js";
-import dayoffRoutes from "./routes/dayoff.js";
-import adminRoutes from "./routes/admin.js";
+import authRoutes from './routes/auth.js';
+import dayoffRoutes from './routes/dayoff.js';
+import adminRoutes from './routes/admin.js';
 
-const createFirstAdmin = async function () { //DB에 관리자 계정이 없을 경우 관리자 계정 생성
-    const hashedPw = await bcrypt.hash("0000", 12);
+import { makeHashPwd } from './controllers/middleware.js';
+
+const createFirstAdmin = async function() { //DB에 관리자 계정이 없을 경우 관리자 계정 생성
+    const hashedPw = await makeHashPwd('1234');
     const newUser = new User({
-        name: "Admin",
-        email: "novaeric@naver.com",
+        name: 'Admin',
+        email: 'novaeric@naver.com',
         password: hashedPw,
-        role: "admin",
+        role: 'admin',
     });
     await newUser.save();
 };
@@ -37,7 +38,13 @@ const createFirstAdmin = async function () { //DB에 관리자 계정이 없을 
         app.use(dayoffRoutes.routes());
         app.use(adminRoutes.routes());
 
-        await mongoose.connect(env.MONGODB_ACCESS_URL);
+        const conn1 = mongoose.createConnection(env.MONGODB_ACCESS_URL);
+        conn1.on('connected', () => {
+            console.log('Connected to database');
+        });
+        conn1.on('error', (error) => {
+            console.error('Error connecting to database:', error);
+        });
 
         const user = await User.findOne();
         if (!user) {
