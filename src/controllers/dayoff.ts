@@ -1,5 +1,5 @@
 import { Context,Next } from 'koa';
-import dayoffSubmit from '../models/dayoffSubmit.js';
+import Dayoff from '../models/dayoffSubmit.js';
 import jwt from 'jsonwebtoken';
 import * as env from '../utils/env.js';
 
@@ -13,7 +13,7 @@ const dayOffSubmitPost = async (ctx: any,next: any) => {
         const dayOffType = ctx.request.body.dayOffValue;
         console.log(token, userId, requestDate, reason, dayOffType);
 
-        const dayoff = new dayoffSubmit({
+        const dayoff = new Dayoff({
             userId: userId,
             reason: reason,
             dayOffValue: dayOffType,

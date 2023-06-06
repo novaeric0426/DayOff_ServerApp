@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import * as env from '../utils/env.js';
+const connection = mongoose.createConnection(env.MONGODB_ACCESS_URL);
 
 const Schema = mongoose.Schema;
 
@@ -19,8 +21,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    availableDayOff: {
+        type: Number,
+        required: true,
+    },
 });
 
-const User = mongoose.model('User', userSchema);
+const User = connection.model('User', userSchema);
 
 export default User;

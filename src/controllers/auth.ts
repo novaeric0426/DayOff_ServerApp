@@ -22,6 +22,7 @@ const signup = async (ctx: Context , next: Next) => {
             password: hashedPw,
             name: data.name,
             role: data.role,
+            availableDayOff: 15,
         });
         console.log(user.password);
         const result = await user.save();

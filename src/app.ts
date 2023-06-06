@@ -20,6 +20,7 @@ const createFirstAdmin = async function() { //DB에 관리자 계정이 없을 �
         email: 'novaeric@naver.com',
         password: hashedPw,
         role: 'admin',
+        availableDayOff: 15,
     });
     await newUser.save();
 };
@@ -38,11 +39,11 @@ const createFirstAdmin = async function() { //DB에 관리자 계정이 없을 �
         app.use(dayoffRoutes.routes());
         app.use(adminRoutes.routes());
 
-        const conn1 = mongoose.createConnection(env.MONGODB_ACCESS_URL);
-        conn1.on('connected', () => {
+        const dbConnectionTest = mongoose.createConnection(env.MONGODB_ACCESS_URL);
+        dbConnectionTest.on('connected', () => {
             console.log('Connected to database');
         });
-        conn1.on('error', (error) => {
+        dbConnectionTest.on('error', (error) => {
             console.error('Error connecting to database:', error);
         });
 

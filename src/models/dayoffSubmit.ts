@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import * as env from '../utils/env.js';
+const connection = mongoose.createConnection(env.MONGODB_ACCESS_URL);
 const Schema = mongoose.Schema;
 
 const dayOffSubmitFormSchema = new Schema({
@@ -20,6 +22,6 @@ const dayOffSubmitFormSchema = new Schema({
     },
 });
 
-const dayOff = mongoose.model('dayOff', dayOffSubmitFormSchema);
+const dayOff = connection.model('dayOff', dayOffSubmitFormSchema);
 
 export default dayOff;
